@@ -13,23 +13,30 @@ bp = Blueprint('auth', __name__, url_prefix='/auth')
 def register():
     if request.method == 'POST':
         username = request.form['username']
+        email = request.form['email']  # Dodajemy email
         password = request.form['password']
         db = get_db()
         error = None
 
+        print(f"Registering user: {username}")  # Debug
+
         if not username:
             error = 'Username is required.'
+        elif not email:
+            error = 'Email is required.'  # Sprawdzamy, czy email jest podany
         elif not password:
             error = 'Password is required.'
 
         if error is None:
             try:
                 db.execute(
-                    "INSERT INTO user (username, password) VALUES (?, ?)",
-                    (username, generate_password_hash(password)),
+                    "INSERT INTO user (username, email, password) VALUES (?, ?, ?)",
+                    (username, email, generate_password_hash(password)),
                 )
                 db.commit()
-            except db.IntegrityError:
+                print("User successfully registered")  # Debug
+            except db.IntegrityError as e:
+                print(f"IntegrityError: {e}")
                 error = f"User {username} is already registered."
             else:
                 return redirect(url_for("auth.login"))
