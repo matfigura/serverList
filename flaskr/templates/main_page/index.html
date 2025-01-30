@@ -1,9 +1,69 @@
 {% extends 'base.html' %}
 
 {% block head %}
-<h1>Templates<h1>
+    <title>Strona z serwerami Minecraft</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 {% endblock %}
 
-{% block body %}
-</h1>T2</h1>
+{% block content %}
+    <div class="container">
+        <!-- Nagłówek z przyciskami -->
+        <header>
+            <div class="header-buttons">
+                <button>Wylosuj serwer</button>
+                <button>Dodaj serwer</button>
+                {% if g.user %}
+                    <button>Witaj, {{ g.user['username'] }}</button>
+                    <a href="{{ url_for('auth.logout') }}" class="button">Wyloguj się</a>
+                {% else %}
+                    <a href="{{ url_for('auth.register') }}" class="button">Zarejestruj się</a>
+                    <a href="{{ url_for('auth.login') }}" class="button">Zaloguj się</a>
+                {% endif %}
+            </div>
+        </header>
+
+        <!-- Logo strony -->
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="LOGO strony">
+        </div>
+
+        <!-- Reklama -->
+        <div class="advertisement">
+            <p>Placeholder na reklamę</p>
+        </div>
+
+        <!-- Wyszukiwarka serwerów -->
+        <div class="search-bar">
+            <input type="text" placeholder="Wprowadź nazwę bądź IP serwera">
+        </div>
+
+        <!-- Przyciski filtrów -->
+        <div class="filters">
+            <button>Najlepsze serwery</button>
+            <button>Największe serwery</button>
+            <button>Najnowsze serwery</button>
+        </div>
+
+        <!-- Lista serwerów -->
+        <div class="server-list">
+            {% for i in range(1, 20) %}
+                <button class="server-button">Serwer {{ i }}</button>
+            {% endfor %}
+        </div>
+
+        <!-- Paginacja -->
+        <div class="pagination">
+            <button>Strona 1</button>
+            <button>Strona 2</button>
+            <button>Strona 3</button>
+            <button>Strona następna</button>
+            <button>Strona ostatnia</button>
+        </div>
+    </div>
+
+    <!-- Półprzeźroczyste grafiki po bokach -->
+    <div class="side-graphics">
+        <div class="left-graphic"></div>
+        <div class="right-graphic"></div>
+    </div>
 {% endblock %}
