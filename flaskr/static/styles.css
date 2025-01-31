@@ -1,0 +1,205 @@
+/* Resetowanie domyślnych stylów */
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  min-height: 100vh;
+  margin: 0;
+  overflow-x: hidden;
+}
+
+
+body {
+  display: flex;
+  flex-direction: column; /* Ustawienie elementów w pionie */
+}
+
+/* Główny układ */
+.row {
+  display: flex;
+  flex: 1; /* Sprawia, że zajmie całą dostępną wysokość */
+}
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+/* Left and right column */
+.column.side {
+  background-color: #333;
+  width: 25%;
+  min-height: 100vh;
+  
+}
+
+/* Middle column */
+.column.middle {
+  background-color: #212121;
+  width: 50%;
+  min-height: 100vh;
+}
+
+/* Clear floats after the columns */
+.row::after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+
+
+
+
+.advertisement {
+  background-color: #e0e0e0;
+  padding: 10px;
+  margin-bottom: 20px;
+}
+
+.search-bar {
+  position: relative;
+  width: 100%;  /* Dostosuj szerokość wg potrzeb */
+  padding: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.search-bar input {
+  background-color: #212121;
+  width: 100%;
+  padding: 6px 30px 6px 10px;  /* Dostosowanie paddingu z prawej strony, aby dodać miejsce na ikonę */
+  border: 1px solid #ccc;
+  border-radius: 20px;
+  font-size: 17px;
+  color: #fff;
+}
+
+.search-bar button {
+  position: absolute;
+  right: 10px;
+  background: none;
+  border: none;
+  cursor: pointer;
+}
+
+.search-bar button i {
+  font-size: 20px;
+  color: #aaa; /* Kolor ikony */
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px; /* Równe odstępy między przyciskami */
+  justify-content: space-between;
+}
+
+.filters .button {
+  width: calc(33.33% - 10px); /* Przyciski zajmują 1/3 szerokości kontenera z uwzględnieniem odstępów */
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  margin-bottom: 20px;
+  border: 1px solid #ccc; /* Ramka */
+  text-align: center; /* Wyrównanie tekstu na środku */
+  background-color: #212121; /* Tło przycisku */
+  border-radius: 5px; /* Zaokrąglone rogi */
+  color: #04AA6D;
+}
+
+.filters .button:hover {
+  background-color: #e0e0e0; /* Zmiana koloru tła po najechaniu */
+}
+
+.server-list {
+  display: flex;
+  flex-direction: column;  /* Ustawienie elementów w kolumnie */
+  gap: 10px;               /* Równe odstępy między linkami */
+  margin-bottom: 20px;     /* Odstęp od paginacji */
+}
+
+.server-button {
+  display: block;          /* Sprawia, że linki rozciągają się na całą szerokość */
+  width: 100%;             /* Linki zajmują całą szerokość rodzica */
+  padding: 10px 20px;      /* Wewnętrzne odstępy */
+  font-size: 16px;         /* Rozmiar czcionki */
+  text-align: center;      /* Wyrównanie tekstu w linku */
+  background-color: #212121; /* Tło linku */
+  border: 1px solid #ccc; /* Ramka */
+  border-radius: 5px;     /* Zaokrąglone rogi */
+  text-decoration: none;  /* Usunięcie podkreślenia z linku */
+}
+
+.pagination {
+  display: flex;
+  justify-content: center; /* Wyśrodkowanie */
+  align-items: center;
+  gap: 0; /* Usunięcie odstępów */
+}
+
+.pagination button {
+  margin: 0;
+  padding: 4px 16px;
+  font-size: 16px;
+  cursor: pointer;
+  border: 1px solid white;
+  background-color: #444;
+  color: white;
+  border-radius: 5px;
+}
+
+/* Stylizacja strzałek */
+.pagination .next-page,
+.pagination .last-page {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.topnav ul {
+  width: 100%;
+  background-color: #212121;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  display: flex; /* Aby elementy były w linii */
+}
+
+.topnav li {
+  float: left; /* Działa razem z display: block */
+}
+
+/* Stylizacja linków w menu */
+.topnav a, .topnav button {
+  display: block;
+  color: #4b4b4b;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+  background: none; /* Usuń domyślny styl dla button */
+  border: none;
+  cursor: pointer;
+}
+
+/* Hover efekt */
+.topnav a:hover, .topnav button:hover {
+  background-color:  #212121;
+  color: rgb(156, 156, 156);
+}
+
+/* Aktywny link */
+.topnav a.active {
+  background-color: #04AA6D;
+  color: white;
+}
+
