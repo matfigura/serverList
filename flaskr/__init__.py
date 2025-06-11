@@ -1,39 +1,48 @@
-import os 
+import os
+from flask import Flask
+from config.config import config_dict
+from .db import db
 
-from flask import Flask, render_template, url_for
 
-def create_app(test_config=None):
-    # create and configure the app
+from . import auth
+from . import main_page
+
+def create_app(config_name=None):
     app = Flask(__name__, instance_relative_config=True)
-    app.config.from_mapping(
-        SECRET_KEY='dev',
-        DATABASE=os.path.join(app.instance_path, 'flaskr.sqlite'),
-    )
 
-    if test_config is None:
-        # load the instance config, if it exists, when not testing
-        app.config.from_pyfile('config.py', silent=True)
-    else:
-        # load the test config if passed in
-        app.config.from_mapping(test_config)
+    # wybór środowiska (np. development / testing / production)
+    env = config_name or os.getenv('FLASK_ENV', 'development')
+    app.config.from_object(config_dict[env])
 
-    # ensure the instance folder exists
+    # ustawienia z pliku instance/config.py (opcjonalne)
+    app.config.from_pyfile('config.py', silent=True)
+
+    # utwórz folder instance, jeśli nie istnieje
     try:
         os.makedirs(app.instance_path)
     except OSError:
         pass
 
- 
-    
-    from . import db
+    # inicjalizacja bazy danych
     db.init_app(app)
 
-    from . import auth
+    # rejestracja blueprintów wewnętrznych
     app.register_blueprint(auth.bp)
-
-    from . import main_page
     app.register_blueprint(main_page.bp)
     app.add_url_rule('/', endpoint='index')
 
+    # rejestracja blueprintów z routes/
+    from flaskr.routes.servers import servers_bp
+    from flaskr.routes.votes import votes_bp
+    from flaskr.routes.skins import skins_bp
+
+    app.register_blueprint(servers_bp)
+    app.register_blueprint(votes_bp)
+    app.register_blueprint(skins_bp)
+
+    # debugowy endpoint
+    @app.route('/_debug')
+    def debug_info():
+        return f"ENV: {env}<br>DB: {app.config.get('SQLALCHEMY_DATABASE_URI')}"
 
     return app

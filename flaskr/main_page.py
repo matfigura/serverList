@@ -1,13 +1,12 @@
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, url_for
+    Blueprint, render_template
 )
-from werkzeug.exceptions import abort
-
-from flaskr.auth import login_required
-from flaskr.db import get_db
+from flaskr.models import Server  # model serwera
 
 bp = Blueprint('main_page', __name__)
 
+
 @bp.route('/')
 def index():
-    return render_template('main_page/index.html')
+    servers = Server.query.order_by(Server.created_at.desc()).all()
+    return render_template('main_page/index.html', servers=servers)
