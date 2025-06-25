@@ -1,3 +1,4 @@
+{# templates/auth/register.html #}
 {% extends 'base.html' %}
 
 {% block header %}
@@ -8,10 +9,21 @@
   <form method="post">
     <label for="username">Username</label>
     <input name="username" id="username" required>
+
     <label for="password">Password</label>
     <input type="password" name="password" id="password" required>
+
     <label for="email">Email</label>
-    <input type="email" name="email" id="'emial" required>
+    <input type="email" name="email" id="email" required>
+
     <input type="submit" value="Register">
   </form>
+
+  <p>— or —</p>
+
+  {# rejestracja/logowanie przez Google #}
+  <a href="{{ google_login }}" class="btn btn-google">
+    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google logo" style="height:1em; vertical-align:middle">
+    Register with Google
+  </a>
 {% endblock %}
